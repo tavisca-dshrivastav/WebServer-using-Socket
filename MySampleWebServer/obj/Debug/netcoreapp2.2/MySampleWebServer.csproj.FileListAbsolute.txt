@@ -1,0 +1,11 @@
+C:\Users\dshrivastav\Desktop\MySampleWebServer\MySampleWebServer\bin\Debug\netcoreapp2.2\MySampleWebServer.deps.json
+C:\Users\dshrivastav\Desktop\MySampleWebServer\MySampleWebServer\bin\Debug\netcoreapp2.2\MySampleWebServer.runtimeconfig.json
+C:\Users\dshrivastav\Desktop\MySampleWebServer\MySampleWebServer\bin\Debug\netcoreapp2.2\MySampleWebServer.runtimeconfig.dev.json
+C:\Users\dshrivastav\Desktop\MySampleWebServer\MySampleWebServer\bin\Debug\netcoreapp2.2\MySampleWebServer.dll
+C:\Users\dshrivastav\Desktop\MySampleWebServer\MySampleWebServer\bin\Debug\netcoreapp2.2\MySampleWebServer.pdb
+C:\Users\dshrivastav\Desktop\MySampleWebServer\MySampleWebServer\obj\Debug\netcoreapp2.2\MySampleWebServer.csprojAssemblyReference.cache
+C:\Users\dshrivastav\Desktop\MySampleWebServer\MySampleWebServer\obj\Debug\netcoreapp2.2\MySampleWebServer.csproj.CoreCompileInputs.cache
+C:\Users\dshrivastav\Desktop\MySampleWebServer\MySampleWebServer\obj\Debug\netcoreapp2.2\MySampleWebServer.AssemblyInfoInputs.cache
+C:\Users\dshrivastav\Desktop\MySampleWebServer\MySampleWebServer\obj\Debug\netcoreapp2.2\MySampleWebServer.AssemblyInfo.cs
+C:\Users\dshrivastav\Desktop\MySampleWebServer\MySampleWebServer\obj\Debug\netcoreapp2.2\MySampleWebServer.dll
+C:\Users\dshrivastav\Desktop\MySampleWebServer\MySampleWebServer\obj\Debug\netcoreapp2.2\MySampleWebServer.pdb
