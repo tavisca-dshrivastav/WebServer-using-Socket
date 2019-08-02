@@ -26,6 +26,7 @@ namespace MySampleWebServer
         public static WebFileHandler From(Request request)
         {
             String file = Environment.CurrentDirectory + HTTPServer.WEB_DIR + request.URL;
+            
             FileInfo f = new FileInfo(file);
             return new WebFileHandler(file, f);
         }

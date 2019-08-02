@@ -4,32 +4,22 @@ namespace MySampleWebServer
 {
     public class Request
     {
-        public Request(string type, string uRL, string host)
+        private Request(RequestHeaderProperties requestHeaderProperties)
         {
-            Type = type;
-            URL = uRL;
-            Host = host;
+            Type = requestHeaderProperties.Type;
+            URL = requestHeaderProperties.URL;
+            if (requestHeaderProperties.URL.EndsWith("//"))
+                URL = requestHeaderProperties.URL.Substring(0,requestHeaderProperties.URL.Length - 1);
+            Host = requestHeaderProperties.Host;
         }
 
         public static Request GetRequest(String request)
         {
             if (String.IsNullOrEmpty(request))
                 return null;
-            String[] tokens = request.Split(' ');
-            String type = tokens[0];
-            String url = tokens[1];
-            String host = tokens[3].Substring(0, tokens[3].IndexOf('\n'));
-            String referer = "";
-            for (int i = 0; i < tokens.Length; i++)
-            {
-                if (tokens[i] == "Referer:")
-                {
-                    referer = tokens[i + 1];
-                    break;
-                }
-            }
-            Console.WriteLine($"{type} {url} @ {host} \nReferer: {referer}");
-            return new Request(type, url, host);
+            RequestHeaderProperties requestHeaderProperties = HTTPParser.ParseHttpRequest(request);            
+            Console.WriteLine($"{requestHeaderProperties.Type} {requestHeaderProperties.URL} @ {requestHeaderProperties.Host} \nReferer: {requestHeaderProperties.Referer}");
+            return new Request(requestHeaderProperties);
         }
 
         public String Type { get; set; }

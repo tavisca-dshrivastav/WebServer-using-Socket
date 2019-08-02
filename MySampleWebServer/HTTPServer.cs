@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace MySampleWebServer
 {
@@ -36,6 +37,8 @@ namespace MySampleWebServer
                 Console.WriteLine("Waiting for connection....");
                 TcpClient client = listener.AcceptTcpClient();
                 Console.WriteLine("Client connected");
+                //Task asyncClientHandler = new Task(() => HandleClient(client));
+                //asyncClientHandler.Start();
                 HandleClient(client);
                 client.Close();
             }
@@ -46,6 +49,7 @@ namespace MySampleWebServer
         private void HandleClient(TcpClient client)
         {
 
+           
             StreamReader reader = new StreamReader(client.GetStream());
             String msg = "";
             while (reader.Peek() != -1)
