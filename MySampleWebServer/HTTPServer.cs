@@ -59,7 +59,7 @@ namespace MySampleWebServer
 
             Debug.WriteLine("Request: \n" + msg);
             Request req = Request.GetRequest(msg);
-            Response resp = Response.From(req);
+            Response resp = Response.GetResponse(req);
             resp.Post(client.GetStream());
         }
 

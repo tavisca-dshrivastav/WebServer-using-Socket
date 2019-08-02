@@ -8,8 +8,8 @@ namespace MySampleWebServer
     {
 
         private static DirectoryInfo _defaultDirectory = new DirectoryInfo(Environment.CurrentDirectory + HTTPServer.WEB_DIR);
-        private static string _file;
-        private static FileInfo _fileInfo;
+        private string _file;
+        private FileInfo _fileInfo;
 
         private static HashSet<string> _defaultFiles = new HashSet<string>
         {
@@ -23,24 +23,36 @@ namespace MySampleWebServer
             _file = file;
             _fileInfo = fileInfo;
         }
-        public static WebFileHandler From(Request request)
+        public static WebFileHandler GetWebFileHandler(Request request)
         {
-            String file = Environment.CurrentDirectory + HTTPServer.WEB_DIR + request.URL;
-            
-            FileInfo f = new FileInfo(file);
-            return new WebFileHandler(file, f);
+            try
+            {
+                String file = Environment.CurrentDirectory + HTTPServer.WEB_DIR + request.URL;
+
+                FileInfo f = new FileInfo(file);
+                return new WebFileHandler(file, f);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine($"Web File Handler Error -> {e.Message}");
+                return null;
+            }
         }
-        public static FileInfo GetFileInfo() => _fileInfo;
-        public static bool IsFileExist() => _fileInfo.Exists;
-        public static string GetFileExtension() => Path.GetExtension(_file);
+        public FileInfo GetFileInfo() => _fileInfo;
+        public bool IsFileExist() => _fileInfo.Exists;
+        public string GetFileExtension() => Path.GetExtension(_file);
 
-        public static bool IsFileRequested() => _fileInfo.Extension.Contains(".");
+        public bool IsFileRequested() => _fileInfo.Extension.Contains(".");
         
-        public static FileInfo GetDefaultFileInfo() => _fileInfo;
+        public FileInfo GetDefaultFileInfo() => _fileInfo;
 
-        public static bool IsDefaultFileExist()
+        public bool IsDefaultFileExist()
         {
             FileInfo[] files = _defaultDirectory.GetFiles();
+            DirectoryInfo di = new DirectoryInfo(_file);
+
+            if (di.Exists == false)
+                return false;
             foreach (FileInfo fileInfo in files)
             {
                 if (_defaultFiles.Contains(fileInfo.Name))

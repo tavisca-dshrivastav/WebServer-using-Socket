@@ -9,7 +9,7 @@ namespace MySampleWebServer
         private Byte[] _data = null;
         private string _status;
         private string _mime;
-
+        private static WebFileHandler webFileHandler;
 
         public Response(String status, string mime, Byte[] data)
         {
@@ -19,33 +19,40 @@ namespace MySampleWebServer
 
         }
 
-        public static Response From(Request request)
+        public static Response GetResponse(Request request)
         {
-            WebFileHandler webFileHandler = WebFileHandler.From(request);
+            try
+            {
+               webFileHandler = WebFileHandler.GetWebFileHandler(request);
 
-            if (ErrorRequest.IsRequestWithError(request))
+                if (ErrorRequest.IsRequestWithError(request))
+                    return ErrorResponse.GetErrorResponse(request);
+
+                if (webFileHandler.IsFileRequested() == true)
+                    return HadleRequestedFile(request);
+
+                if (webFileHandler.IsDefaultFileExist() == true)
+                    return HandleRequestedDirectory();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine($"Response Exception ->{e.Message}");
                 return ErrorResponse.GetErrorResponse(request);
-
-            if (WebFileHandler.IsFileRequested() == true)
-                return HadleRequestedFile(request);
-
-            if (WebFileHandler.IsDefaultFileExist() == true)
-                return HandleRequestedDirectory();
-
+            }
             return ErrorResponse.GetErrorResponse(request);
         }
 
         private static Response HandleRequestedDirectory()
         {
-            FileInfo defaultFile = WebFileHandler.GetDefaultFileInfo();
+            FileInfo defaultFile = webFileHandler.GetDefaultFileInfo();
             string extention = Path.GetExtension(defaultFile.ToString());
             return MakeFromFile(defaultFile, extention);
         }
 
         private static Response HadleRequestedFile(Request request)
         {
-            if (WebFileHandler.IsFileExist() == true)
-                return MakeFromFile(WebFileHandler.GetFileInfo(), WebFileHandler.GetFileExtension());
+            if (webFileHandler.IsFileExist() == true)
+                return MakeFromFile(webFileHandler.GetFileInfo(), webFileHandler.GetFileExtension());
             return ErrorResponse.GetErrorResponse(request);
         }
 
